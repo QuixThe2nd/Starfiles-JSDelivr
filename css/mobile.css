@@ -1,0 +1,303 @@
+@media only screen and (max-width: 600px) {
+    html, body{
+        background: white
+    }
+    h2{
+        margin:10px
+    }
+    .btn.btn-round{
+        width:unset;
+    }
+    .btn.btn-small{
+        width:initial
+    }
+    .searchparent{
+        display:block
+    }
+    .inlineflexdesktop{
+        display:block
+    }
+    .card{
+        border-radius:15px;
+        margin-top:0;
+        width:calc(100% - 40px)
+    }
+    .bottomheader,.uploadcard{
+        margin-left:auto;
+        margin-right:auto
+    }
+    .uploadcard{
+        background:unset;
+        padding:20px 0 0
+    }
+    .uploadcard p{
+        box-shadow:0 10px 10px #0002;
+        font-size:12px;
+        margin-top:-1vh;
+        padding-bottom:4vh;
+        position:relative;
+        width:100%
+    }
+    .bottomheader{
+        padding:10px 0
+    }
+    .upload{
+        border-radius:0;
+        border-top-left-radius:15px;
+        border-top-right-radius:15px
+    }
+    .upload p{
+        background:unset;
+        box-shadow:unset;
+        left:50%;
+        margin:0;
+        padding:0;
+        position:absolute;
+        top:50%;
+        transform:translate(-50%,-50%);
+        vertical-align:middle
+    }
+    #progress,.upload{
+        width:100%
+    }
+    .recents,.uploadinfo{
+        width:calc(100% - 20px)
+    }
+    .uploadinfo_index{
+        box-shadow: 1px 2px 30px 0px #0000002e
+    }
+    .recents{
+        border-bottom-left-radius:15px;
+        border-bottom-right-radius:15px;
+        margin:0 10px 10px;
+        padding-top:0
+    }
+    .recents h2{
+        margin-top:0
+    }
+    .foldergrid,.recents .file_list, .public_cards{
+        grid-gap:0;
+        grid-template-columns:none
+    }
+    .public_cards .object{
+        margin: 5px 0;
+        width: 100%
+    }
+    .recents .file_list a{
+        box-shadow:none;
+        overflow:visible;
+        padding:1px;
+        width:100%;
+        margin:1px
+    }
+    .bottomheader, .uploadcard{
+        width: calc(100% - 20px)
+    }
+    .file{
+        display:block;
+        margin:auto;
+        width:calc(100% - 30px)
+    }
+    .foldercard{
+        border-top-left-radius:0;
+        border-top-right-radius:0;
+        margin-top:0;
+        max-width:unset;
+        width:calc(100% - 30px)
+    }
+    button.btn, a.btn{
+        width:calc(100% - 30px)
+    }
+    .button-group{
+        margin:auto;
+        width:calc(100% - 20px)
+    }
+    .file-single{
+        flex-direction:column;
+        width:calc(100% - 40px)
+    }
+    .preview{
+        height:auto;
+        margin-left:auto;
+        margin-right:auto;
+        max-height:20vh;
+        max-width:calc(100% - 40px);
+        width:auto
+    }
+    .pagecard{
+        width:calc(100% - 40px)
+    }
+    .warning{
+        margin-top:25px
+    }
+    .simpleform{
+        display: inline-table
+    }
+    .simpleform input[type=submit]{
+        margin:5px auto
+    }
+    .uploadinfo{
+        box-shadow: 1px 2px 30px #cecece
+    }
+    .hide_on_mobile{
+        display:none!important
+    }
+    #emoji_picker_button{
+        display:none
+    }
+    .stickyheader .headerbanner a{
+        margin:auto
+    }
+    .stickyheader .headerbanner h1{
+        margin:8px
+    }
+    .stickyheader .headerbanner p{
+        display:none
+    }
+    .stickyheader .headersearch{
+        display:none
+    }
+    .recents .file_list.list_view{
+        grid-gap:1px
+    }
+    @media (prefers-color-scheme: dark){
+        html,body{
+            background:#2a2e38
+        }
+        .recents{
+            background:#212329
+        }
+        .uploadinfo{
+            box-shadow: #393e3f 1px 2px 30px; 
+        }
+        .recents .gridRecents a{
+            background:transparent
+        }
+        .upload p{
+            color:#fff
+        }
+    }
+    .dashboard{
+        display: initial
+    }
+    .dashboard .sidebar{
+        width: 100%;
+        text-align: center
+    }
+    .dashboard .sidebar .separator{
+        width: 100%
+    }
+    .dashboard .mainpage{
+        width: 100%
+    }
+	.card.mob-col-12{
+		width:calc(100% - 32px)
+	}
+	.card.mob-col-11{
+		width:calc(91.66% - 32px)
+	}
+	.card.mob-col-10{
+		width:calc(83.33% - 32px)
+	}
+	.card.mob-col-9{
+		width:calc(75% - 32px)
+	}
+	.card.mob-col-8{
+		width:calc(66.66% - 32px)
+	}
+	.card.mob-col-7{
+		width:calc(58.33% - 32px)
+	}
+	.card.mob-col-6{
+		width:calc(50% - 32px)
+	}
+	.card.mob-col-5{
+		width:calc(41.66% - 32px)
+	}
+	.card.mob-col-4{
+		width:calc(33.33% - 32px)
+	}
+	.card.mob-col-3{
+		width:calc(25% - 32px)
+	}
+	.card.mob-col-2{
+		width:calc(16.66% - 32px)
+	}
+	.card.mob-col-1{
+		width:calc(8.33% - 32px)
+	}
+	.mob-col-12{
+		width:100%
+	}
+	.mob-col-11{
+		width:91.66%
+	}
+	.mob-col-10{
+		width:83.33%
+	}
+	.mob-col-9{
+		width:75%
+	}
+	.mob-col-8{
+		width:66.66%
+	}
+	.mob-col-7{
+		width:58.33%
+	}
+	.mob-col-6{
+		width:50%
+	}
+	.mob-col-5{
+		width:41.66%
+	}
+	.mob-col-4{
+		width:33.33%
+	}
+	.mob-col-3{
+		width:25%
+	}
+	.mob-col-2{
+		width:16.66%
+	}
+	.mob-col-1{
+		width:8.33%
+	}
+}
+@media only screen and (max-width:500px){
+    .simpleform-small input[type=email],.simpleform-small input[type=password],.simpleform-small input[type=search],.simpleform-small input[type=text],.simpleform-small input[type=number],.simpleform-small input[type=url],.simpleform-small button,.simpleform-small input[type=submit],.simpleform-small select{
+        width:100%
+    }
+    .simpleform-small .bubble,.simpleform-small .bubble-small{
+        width:calc(100% - 52px)
+    }
+    .simpleform-small a.btn{
+        width:calc(100% - 32px)
+    }
+    .simpleform > :not([style*='display: none']):first-child{
+        border-radius:0;
+        border-top-left-radius:2vh;
+        border-top-right-radius:2vh
+    }
+    .simpleform > :not([style*='display: none']):last-child{
+        border-radius:0;
+        border-bottom-left-radius:2vh;
+        border-bottom-right-radius:2vh
+    }
+	.simpleform input[type=email],.simpleform input[type=password],.simpleform input[type=search],.simpleform input[type=text],.simpleform input[type=number],.simpleform input[type=url], .simpleform .bubble{
+		margin:0 10px;
+		max-width:calc(100% - 30px);
+		padding:8px 4px;
+		width:100%;
+        border:1
+	}
+	.simpleform input[type=submit],.simpleform select{
+		margin:0 10px;
+		padding:6px;
+		width:calc(100% - 30px)
+	}
+	.simpleform button{
+		margin:0 10px;
+		padding:6px;
+		width:calc(100% - 22px)
+	}
+}

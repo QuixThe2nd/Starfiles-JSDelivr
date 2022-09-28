@@ -1,0 +1,58 @@
+@media print {
+	@page {
+		margin: 2cm !important
+	}
+	html, body {
+		float: none !important;
+		font: 13pt Georgia, "Times New Roman", Times, serif !important;
+		line-height: 1.3 !important;
+		background: #fff !important;
+		color: #000 !important
+	}
+	h1 {
+		font-size: 24pt !important
+	}
+	h2, h3, h4 {
+		font-size: 14pt !important;
+		margin-top: 25px !important
+	}
+
+	/* Page Breaks */
+	h1, h2, h3, h4, h5, h6 {
+		page-break-after:avoid !important;
+			page-break-inside:avoid !important
+	}
+	img {
+		page-break-inside:avoid !important;
+			page-break-after:avoid !important
+	}
+
+	/* Links */
+	a:link, a:visited, a {
+		page-break-inside:avoid !important;
+		background: transparent !important;
+		font-weight: bold !important;
+		text-decoration: underline !important;
+		text-align: left !important
+	}
+	$a::after > img {
+		content: "" !important
+	}
+
+	/* Hide Useless Elements */
+	iframe, video, .branding, .branding_notice, .adblock_check, .hide_on_print, .button-group {
+		display: none !important;
+		width: 0 !important;
+		height: 0 !important;
+		overflow: hidden !important;
+		line-height: 0pt !important;
+		white-space: nowrap !important
+	}
+	.show_on_print{
+		display:block!important
+	}
+	.object{
+		width: calc(100% - 30px);
+		max-width:600px
+	}
+}
