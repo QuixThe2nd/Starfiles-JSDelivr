@@ -1,5 +1,3 @@
-var functionsloaded = true;
-
 // Functions
 function getScript(url){
     var js_script = document.createElement('script');
@@ -175,3 +173,6 @@ function post(url, data) {
         xhr.send(JSON.stringify(data));
     })
 }
+
+
+var functionsloaded = true;
