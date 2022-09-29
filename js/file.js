@@ -1,4 +1,3 @@
-var fileloaded = false;
 const onSubmit = (data) => {
     alert(data);
 };
