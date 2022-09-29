@@ -1,4 +1,3 @@
-var downloadfileloaded = true;
 function downloadFile(url, name){
     document.getElementById('download_status').style.display = 'block';
     document.getElementById('downloadcountdownmessage').style.display = 'block';
