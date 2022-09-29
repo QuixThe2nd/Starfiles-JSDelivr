@@ -1,5 +1,3 @@
-var functionsloaded = true;
-
 // Functions
 function getScript(url){
     var js_script = document.createElement('script');
