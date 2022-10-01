@@ -308,14 +308,22 @@ async function preChunkCheck(index, tracker) {
                         confirmationData.append("extension", fileext);
                         confirmationData.append("folder", folderid);
                         confirmationData.append("name", tracker.file.name);
-                        let compileResponse = await fetch('https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], {
-                            method: 'POST',
-                            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                            body: new URLSearchParams(confirmationData),
-                            mode: 'no-cors'
-                        })
+                        // fetch('https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], {
+                        //     method: 'POST',
+                        //     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        //     body: new URLSearchParams(confirmationData),
+                        //     mode: 'no-cors'
+                        // })
+                        // .then((response) => response.json())
+                        // .then((data) => console.log('bbbbb', data));
 
-                        let data = await compileResponse.json();
+
+                        var xmlHttp = new XMLHttpRequest();
+                        xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], false)
+                        xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        xmlHttp.send(new URLSearchParams(confirmationData));
+                        data = JSON.parse(xmlHttp.responseText);
+
                         if (data["status"]) {
 							document.getElementById("progressBar" + (tracker.index + 1)).hidden = true;
                             if (typeof logging_enabled !== "undefined")
@@ -772,4 +780,3 @@ function shuffle(originalArray) {
   
     return array;
   }
-  
