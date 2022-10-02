@@ -305,7 +305,6 @@ async function preChunkCheck(index, tracker) {
 						let confirmationData = new FormData();
 						confirmationData.append("compile_file", tracker.chunk_hashes);
 						confirmationData.append("file_id", tracker.fileId);
-                        confirmationData.append("extension", fileext);
                         confirmationData.append("folder", folderid);
                         confirmationData.append("name", tracker.file.name);
                         // fetch('https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], {
@@ -415,7 +414,6 @@ async function preChunkCheck(index, tracker) {
                                     let confirmationData = new FormData();
                                     confirmationData.append("compile_file", tracker.chunk_hashes);
                                     confirmationData.append("file_id", tracker.fileId);
-                                    confirmationData.append("extension", fileext);
                                     confirmationData.append("name", tracker.file.name);
                                     confirmationData.append("folder", folderid);
 
