@@ -305,6 +305,7 @@ async function preChunkCheck(index, tracker) {
 						let confirmationData = new FormData();
 						confirmationData.append("compile_file", tracker.chunk_hashes);
 						confirmationData.append("file_id", tracker.fileId);
+                        confirmationData.append("extension", fileext);
                         confirmationData.append("folder", folderid);
                         confirmationData.append("name", tracker.file.name);
                         // fetch('https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], {
@@ -316,19 +317,22 @@ async function preChunkCheck(index, tracker) {
                         // .then((response) => response.json())
                         // .then((data) => console.log('bbbbb', data));
 
+                        function compileFile(){
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], false)
+                            xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                            xmlhttp.onerror = compileFile();
+                            xmlHttp.send(new URLSearchParams(confirmationData));
+                            data = JSON.parse(xmlHttp.responseText);
 
-                        var xmlHttp = new XMLHttpRequest();
-                        xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], false)
-                        xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                        xmlHttp.send(new URLSearchParams(confirmationData));
-                        data = JSON.parse(xmlHttp.responseText);
-
-                        if (data["status"]) {
-							document.getElementById("progressBar" + (tracker.index + 1)).hidden = true;
-                            if (typeof logging_enabled !== "undefined")
-                                console.log("Finished uploading");
-                        }else
-                            finish(data['message'] + '<br>');
+                            if(data["status"]){
+                                document.getElementById("progressBar" + (tracker.index + 1)).hidden = true;
+                                if (typeof logging_enabled !== "undefined")
+                                    console.log("Finished uploading");
+                            }else
+                                finish(data['message'] + '<br>');
+                        }
+                        compileFile();
                         progress += (BYTES_PER_CHUNK / tracker.size) * 100;
                         // document.getElementById("progressBarBuffer" + (tracker.index + 1)).style.width = `${Math.trunc(progress-(100*(tracker.fileSizes.length / tracker.size)))}%`;
                         startUploads();
@@ -414,20 +418,25 @@ async function preChunkCheck(index, tracker) {
                                     let confirmationData = new FormData();
                                     confirmationData.append("compile_file", tracker.chunk_hashes);
                                     confirmationData.append("file_id", tracker.fileId);
+                                    confirmationData.append("extension", fileext);
                                     confirmationData.append("name", tracker.file.name);
                                     confirmationData.append("folder", folderid);
 
-                                    var xmlHttp = new XMLHttpRequest();
-                                    xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], false)
-                                    xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                                    xmlHttp.send(new URLSearchParams(confirmationData));
-                                    data = JSON.parse(xmlHttp.responseText);
-                                    if (data["status"]) {
-										document.getElementById("progressBar" + (tracker.index + 1)).hidden = true;
-                                        if (typeof logging_enabled !== "undefined")
-                                            console.log("Finished uploading");
-                                    }else
-                                        finish(data['message'] + '<br>');
+                                    function compileFile(){
+                                        var xmlHttp = new XMLHttpRequest();
+                                        xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], false)
+                                        xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                                        xmlhttp.onerror = compileFile();
+                                        xmlHttp.send(new URLSearchParams(confirmationData));
+                                        data = JSON.parse(xmlHttp.responseText);
+                                        if (data["status"]) {
+                                            document.getElementById("progressBar" + (tracker.index + 1)).hidden = true;
+                                            if (typeof logging_enabled !== "undefined")
+                                                console.log("Finished uploading");
+                                        }else
+                                            finish(data['message'] + '<br>');
+                                    }
+                                    compileFile();
                                     startUploads();
                                 }
                                 if (currentUploadCounter == 0)
