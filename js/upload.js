@@ -321,7 +321,7 @@ async function preChunkCheck(index, tracker) {
                             var xmlHttp = new XMLHttpRequest();
                             xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], false)
                             xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                            xmlhttp.onerror = compileFile();
+                            xmlHttp.onerror = compileFile();
                             xmlHttp.send(new URLSearchParams(confirmationData));
                             data = JSON.parse(xmlHttp.responseText);
 
@@ -426,7 +426,7 @@ async function preChunkCheck(index, tracker) {
                                         var xmlHttp = new XMLHttpRequest();
                                         xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], false)
                                         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                                        xmlhttp.onerror = compileFile();
+                                        xmlHttp.onerror = compileFile();
                                         xmlHttp.send(new URLSearchParams(confirmationData));
                                         data = JSON.parse(xmlHttp.responseText);
                                         if (data["status"]) {
