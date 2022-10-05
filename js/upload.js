@@ -12,7 +12,7 @@ let isProcessingUploads = false;
 let online = true;
 let checkingConnection = false;
 let noInternet;
-let concurrentUploads = 20;
+let concurrentUploads = 5;
 // let logging_enabled = true;
 // let progress = 0;
 
