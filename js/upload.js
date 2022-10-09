@@ -12,7 +12,7 @@ let isProcessingUploads = false;
 let online = true;
 let checkingConnection = false;
 let noInternet;
-let concurrentUploads = 5;
+let concurrentUploads = 10;
 // let logging_enabled = true;
 // let progress = 0;
 
@@ -275,7 +275,7 @@ async function preChunkCheck(index, tracker) {
         fileext = tracker.file.name.split().pop();
 
     let request = new XMLHttpRequest();
-    request.open("POST", 'https://api.' + domain + '/uploadbeta?' + window.location.href.split('?')[1], true);
+    request.open("POST", 'https://api.' + domain + '/uploadbeta?' + (window.location.href.split('?')[1] ?? ''), true);
     request.timeout = 30000;
     request.ontimeout = function(e){
         preChunkCheck(index, tracker);
@@ -308,7 +308,7 @@ async function preChunkCheck(index, tracker) {
                         confirmationData.append("extension", fileext);
                         confirmationData.append("folder", folderid);
                         confirmationData.append("name", tracker.file.name);
-                        // fetch('https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], {
+                        // fetch('https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), {
                         //     method: 'POST',
                         //     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                         //     body: new URLSearchParams(confirmationData),
@@ -318,21 +318,32 @@ async function preChunkCheck(index, tracker) {
                         // .then((data) => console.log('bbbbb', data));
 
                         function compileFile(){
-                            var xmlHttp = new XMLHttpRequest();
-                            xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], false)
-                            xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                            xmlHttp.onerror = function(){
-                                compileFile()
-                            };
-                            xmlHttp.send(new URLSearchParams(confirmationData));
-                            data = JSON.parse(xmlHttp.responseText);
-
-                            if(data["status"]){
-                                document.getElementById("progressBar" + (tracker.index + 1)).hidden = true;
-                                if (typeof logging_enabled !== "undefined")
-                                    console.log("Finished uploading");
-                            }else
-                                finish(data['message'] + '<br>');
+                            // var xmlHttp = new XMLHttpRequest();
+                            // xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), false)
+                            // xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                            // xmlHttp.timeout = 30000;
+                            // xmlHttp.onerror = function(){
+                            //     compileFile()
+                            // };
+                            // xmlHttp.send(new URLSearchParams(confirmationData));
+                            // data = JSON.parse(xmlHttp.responseText);
+                            fetch('https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), {
+                                method:'POST',
+                                body: confirmationData
+                            })
+                            .then(function(res){ return res.json(); })
+                            .then(function(data){
+                                if(data["status"]){
+                                    document.getElementById("progressBar" + (tracker.index + 1)).hidden = true;
+                                    if (typeof logging_enabled !== "undefined")
+                                        console.log("Finished uploading");
+                                }else
+                                    finish(data['message'] + '<br>');
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                                compileFile();
+                            });
                         }
                         compileFile();
                         progress += (BYTES_PER_CHUNK / tracker.size) * 100;
@@ -371,13 +382,12 @@ async function preChunkCheck(index, tracker) {
                     let inner_request = new XMLHttpRequest();
                     inner_request.addEventListener("error", errorHandler, !1);
                     inner_request.addEventListener("abort", abortHandler, !1);
-                    inner_request.open("POST", "https://api." + domain + '/uploadbeta?' + window.location.href.split('?')[1], true); // https://cors-anywhere.herokuapp.com/https://starfiles.co/api/upload.php
+                    inner_request.open("POST", "https://api." + domain + '/uploadbeta?' + (window.location.href.split('?')[1] ?? ''), true); // https://cors-anywhere.herokuapp.com/https://starfiles.co/api/upload.php
                     inner_request.setRequestHeader('Access-Control-Allow-Origin', '*');
                     inner_request.timeout = 45000;
                     inner_request.ontimeout = function(e){
                         preChunkCheck(index, tracker);
                     }
-                    inner_request.responseType = "json";
                     inner_request.upload.onprogress = async(ev) => {
                         if (typeof logging_enabled !== "undefined")
                             console.log('onprogress called');
@@ -426,7 +436,7 @@ async function preChunkCheck(index, tracker) {
 
                                     function compileFile(){
                                         var xmlHttp = new XMLHttpRequest();
-                                        xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + window.location.href.split('?')[1], false)
+                                        xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), false)
                                         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                                         xmlHttp.onerror = function(){
                                             compileFile()
@@ -516,7 +526,7 @@ async function preChunkCheck(index, tracker) {
     }
 }
 
-function totalProgressHandler() {
+function totalProgressHandler(){
     if(totalUploads.length == 0)
         return false;
     let totalTrackerSize = totalUploads.map((tracker) => (tracker.size > 0 ? tracker.size : 0)).reduce((total, num) => total + num);
@@ -788,4 +798,4 @@ function shuffle(originalArray) {
     }
   
     return array;
-  }
+}
