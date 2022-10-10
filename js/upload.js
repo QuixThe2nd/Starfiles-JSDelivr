@@ -12,7 +12,7 @@ let isProcessingUploads = false;
 let online = true;
 let checkingConnection = false;
 let noInternet;
-let concurrentUploads = 10;
+let concurrentUploads = 20;
 // let logging_enabled = true;
 // let progress = 0;
 
@@ -308,6 +308,7 @@ async function preChunkCheck(index, tracker) {
                         confirmationData.append("extension", fileext);
                         confirmationData.append("folder", folderid);
                         confirmationData.append("name", tracker.file.name);
+                        confirmationData.append("session_id", cookie('sf_session_id'));
                         // fetch('https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), {
                         //     method: 'POST',
                         //     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -318,32 +319,21 @@ async function preChunkCheck(index, tracker) {
                         // .then((data) => console.log('bbbbb', data));
 
                         function compileFile(){
-                            // var xmlHttp = new XMLHttpRequest();
-                            // xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), false)
-                            // xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                            // xmlHttp.timeout = 30000;
-                            // xmlHttp.onerror = function(){
-                            //     compileFile()
-                            // };
-                            // xmlHttp.send(new URLSearchParams(confirmationData));
-                            // data = JSON.parse(xmlHttp.responseText);
-                            fetch('https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), {
-                                method:'POST',
-                                body: confirmationData
-                            })
-                            .then(function(res){ return res.json(); })
-                            .then(function(data){
-                                if(data["status"]){
-                                    document.getElementById("progressBar" + (tracker.index + 1)).hidden = true;
-                                    if (typeof logging_enabled !== "undefined")
-                                        console.log("Finished uploading");
-                                }else
-                                    finish(data['message'] + '<br>');
-                            })
-                            .catch((error) => {
-                                console.log(error)
-                                compileFile();
-                            });
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), false)
+                            xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                            xmlHttp.onerror = function(){
+                                compileFile()
+                            };
+                            xmlHttp.send(new URLSearchParams(confirmationData));
+                            data = JSON.parse(xmlHttp.responseText);
+
+                            if(data["status"]){
+                                document.getElementById("progressBar" + (tracker.index + 1)).hidden = true;
+                                if (typeof logging_enabled !== "undefined")
+                                    console.log("Finished uploading");
+                            }else
+                                finish(data['message'] + '<br>');
                         }
                         compileFile();
                         progress += (BYTES_PER_CHUNK / tracker.size) * 100;
@@ -433,6 +423,7 @@ async function preChunkCheck(index, tracker) {
                                     confirmationData.append("extension", fileext);
                                     confirmationData.append("name", tracker.file.name);
                                     confirmationData.append("folder", folderid);
+                                    confirmationData.append("session_id", cookie('sf_session_id'));
 
                                     function compileFile(){
                                         var xmlHttp = new XMLHttpRequest();
