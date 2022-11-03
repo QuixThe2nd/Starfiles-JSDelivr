@@ -264,18 +264,15 @@ async function preChunkCheck(index, tracker) {
 
     let blob = tracker.file.slice(tracker.chunk_start_data[index], tracker.chunk_end_data[index]);
 
-    preChunkFormData = new FormData();
 	let chunkHash = await getSHA256(blob, undefined);
 	tracker.chunk_hashes[index] = chunkHash;
     console.log(tracker.chunk_hashes, index, chunkHash);
-    preChunkFormData.append("chunk_hash", chunkHash);
-    preChunkFormData.append("chunk_check", true);
     let fileext = "";
     if (tracker.file.name.indexOf() != -1)
         fileext = tracker.file.name.split().pop();
 
     let request = new XMLHttpRequest();
-    request.open("POST", 'https://api.' + domain + '/uploadbeta?' + (window.location.href.split('?')[1] ?? ''), true);
+    request.open("GET", 'https://api.' + domain + '/uploadbeta?chunk_check=true&chunk_hash=' + chunkHash + '&' + (window.location.href.split('?')[1] ?? ''), true);
     request.timeout = 30000;
     request.ontimeout = function(e){
         preChunkCheck(index, tracker);
@@ -508,11 +505,11 @@ async function preChunkCheck(index, tracker) {
         }
     };
     request.onerror = function() { connectionHandler() };
-    try {
-        request.send(preChunkFormData);
-        if (!startTime)
+    try{
+        request.send();
+        if(!startTime)
             startTime = new Date().getTime();
-    } catch (exception) {
+    }catch(exception){
         connectionHandler();
     }
 }
@@ -532,7 +529,7 @@ function totalProgressHandler(){
         percentComplete = 100;
     // document.title = percentComplete + "% Starfiles - File hosting done simple";
     if (+percentComplete == 100) {
-        document.getElementById("status").innerHTML = "Finalizing upload";
+        document.getElementById("status").innerHTML = "Finalising upload";
         document.getElementById("upload_speed").innerHTML = "0Mbs";
 	document.dispatchEvent(evt);
     } else
