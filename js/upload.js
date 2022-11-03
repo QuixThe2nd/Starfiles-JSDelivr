@@ -59,11 +59,10 @@ class UploadTracker {
         this.chunk_upload_queue = [];
         this.chunk_upload_in_progress = [];
         this.chunk_upload_in_finished = [];
-		this.chunk_hashes = [];
-		let fileUUID = this.uuidv4();
-		this.fileId = fileUUID.substring(fileUUID.length - 12, fileUUID.length);
+	this.chunk_hashes = [];
+	let fileUUID = this.uuidv4();
+	this.fileId = fileUUID.substring(fileUUID.length - 12, fileUUID.length);
 
-        navigator.sendBeacon('https://api.' + domain + '/file/reserve_id/' + this.fileId);
         if(xenhtml)
             finish('<a href="#" onclick="window.location = \'https://' + domain + '/file/' + this.fileId + '\';setTimeout(function(){window.location.reload()},1500)" target="_blank" class="banner banner-small">' + this.file.name + '&nbsp;<i class="fas fa-link"></i></a>&nbsp;<i onclick="open_share_overlay(\'' + this.fileId + '\')" class="fas fa-share-square"></i><br>');
         else if(starfiles.local){
