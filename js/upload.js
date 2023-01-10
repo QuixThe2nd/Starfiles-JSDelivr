@@ -12,7 +12,7 @@ let isProcessingUploads = false;
 let online = true;
 let checkingConnection = false;
 let noInternet;
-let concurrentUploads = 20;
+let concurrentUploads = 5;
 // let logging_enabled = true;
 // let progress = 0;
 
@@ -59,10 +59,11 @@ class UploadTracker {
         this.chunk_upload_queue = [];
         this.chunk_upload_in_progress = [];
         this.chunk_upload_in_finished = [];
-	this.chunk_hashes = [];
-	let fileUUID = this.uuidv4();
-	this.fileId = fileUUID.substring(fileUUID.length - 12, fileUUID.length);
+		this.chunk_hashes = [];
+		let fileUUID = this.uuidv4();
+		this.fileId = fileUUID.substring(fileUUID.length - 12, fileUUID.length);
 
+        navigator.sendBeacon('https://api.' + domain + '/file/reserve_id/' + this.fileId);
         if(xenhtml)
             finish('<a href="#" onclick="window.location = \'https://' + domain + '/file/' + this.fileId + '\';setTimeout(function(){window.location.reload()},1500)" target="_blank" class="banner banner-small">' + this.file.name + '&nbsp;<i class="fas fa-link"></i></a>&nbsp;<i onclick="open_share_overlay(\'' + this.fileId + '\')" class="fas fa-share-square"></i><br>');
         else if(starfiles.local){
@@ -263,15 +264,18 @@ async function preChunkCheck(index, tracker) {
 
     let blob = tracker.file.slice(tracker.chunk_start_data[index], tracker.chunk_end_data[index]);
 
+    preChunkFormData = new FormData();
 	let chunkHash = await getSHA256(blob, undefined);
 	tracker.chunk_hashes[index] = chunkHash;
     console.log(tracker.chunk_hashes, index, chunkHash);
+    preChunkFormData.append("chunk_hash", chunkHash);
+    preChunkFormData.append("chunk_check", true);
     let fileext = "";
     if (tracker.file.name.indexOf() != -1)
         fileext = tracker.file.name.split().pop();
 
     let request = new XMLHttpRequest();
-    request.open("GET", 'https://api.' + domain + '/uploadbeta?chunk_check=true&chunk_hash=' + chunkHash + '&' + (window.location.href.split('?')[1] ?? ''), true);
+    request.open("POST", 'https://api.' + domain + '/uploadbeta?' + (window.location.href.split('?')[1] ?? ''), true);
     request.timeout = 30000;
     request.ontimeout = function(e){
         preChunkCheck(index, tracker);
@@ -504,11 +508,11 @@ async function preChunkCheck(index, tracker) {
         }
     };
     request.onerror = function() { connectionHandler() };
-    try{
-        request.send();
-        if(!startTime)
+    try {
+        request.send(preChunkFormData);
+        if (!startTime)
             startTime = new Date().getTime();
-    }catch(exception){
+    } catch (exception) {
         connectionHandler();
     }
 }
@@ -528,7 +532,7 @@ function totalProgressHandler(){
         percentComplete = 100;
     // document.title = percentComplete + "% Starfiles - File hosting done simple";
     if (+percentComplete == 100) {
-        document.getElementById("status").innerHTML = "Finalising upload";
+        document.getElementById("status").innerHTML = "Finalizing upload";
         document.getElementById("upload_speed").innerHTML = "0Mbs";
 	document.dispatchEvent(evt);
     } else
