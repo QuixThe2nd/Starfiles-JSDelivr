@@ -275,7 +275,7 @@ async function preChunkCheck(index, tracker) {
         fileext = tracker.file.name.split().pop();
 
     let request = new XMLHttpRequest();
-    request.open("POST", 'https://api.' + domain + '/uploadbeta?' + (window.location.href.split('?')[1] ?? ''), true);
+    request.open("POST", 'https://upload.' + domain + '/chunk?' + (window.location.href.split('?')[1] ?? ''), true);
     request.timeout = 30000;
     request.ontimeout = function(e){
         preChunkCheck(index, tracker);
@@ -309,7 +309,7 @@ async function preChunkCheck(index, tracker) {
                         confirmationData.append("folder", folderid);
                         confirmationData.append("name", tracker.file.name);
                         confirmationData.append("session_id", cookie('sf_session_id'));
-                        // fetch('https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), {
+                        // fetch('https://upload.' + domain + '/chunk?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), {
                         //     method: 'POST',
                         //     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                         //     body: new URLSearchParams(confirmationData),
@@ -320,7 +320,7 @@ async function preChunkCheck(index, tracker) {
 
                         function compileFile(){
                             var xmlHttp = new XMLHttpRequest();
-                            xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), false)
+                            xmlHttp.open("POST", 'https://upload.' + domain + '/chunk?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), false)
                             xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                             xmlHttp.onerror = function(){
                                 compileFile()
@@ -372,7 +372,7 @@ async function preChunkCheck(index, tracker) {
                     let inner_request = new XMLHttpRequest();
                     inner_request.addEventListener("error", errorHandler, !1);
                     inner_request.addEventListener("abort", abortHandler, !1);
-                    inner_request.open("POST", "https://api." + domain + '/uploadbeta?' + (window.location.href.split('?')[1] ?? ''), true); // https://cors-anywhere.herokuapp.com/https://starfiles.co/api/upload.php
+                    inner_request.open("POST", "https://upload." + domain + '/chunk?' + (window.location.href.split('?')[1] ?? ''), true); // https://cors-anywhere.herokuapp.com/https://starfiles.co/api/upload.php
                     inner_request.setRequestHeader('Access-Control-Allow-Origin', '*');
                     inner_request.timeout = 45000;
                     inner_request.ontimeout = function(e){
@@ -427,7 +427,7 @@ async function preChunkCheck(index, tracker) {
 
                                     function compileFile(){
                                         var xmlHttp = new XMLHttpRequest();
-                                        xmlHttp.open("POST", 'https://api.' + domain + '/uploadbeta?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), false)
+                                        xmlHttp.open("POST", 'https://upload.' + domain + '/chunk?compile&delete_time=' + starfiles.delete_time + '&public=' + starfiles.public + '&' + (window.location.href.split('?')[1] ?? ''), false)
                                         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                                         xmlHttp.onerror = function(){
                                             compileFile()
