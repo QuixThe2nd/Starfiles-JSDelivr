@@ -7,25 +7,30 @@ if(typeof getScript === "undefined"){
 }
 
 // paceOptions = {restartOnRequestAfter: false}
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments)}
 window.addEventListener('load', () => {
-    // Microsoft Clarity
-    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="//www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "7vvzmi3jno");
+    if(navigator.doNotTrack !== '1'){
+        // Microsoft Clarity
+        (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="//www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "7vvzmi3jno");
 
-    // Google Analytics
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments)}
-    gtag('js', new Date());
-    gtag('set', {'user_id': public_key});
-    gtag('set', 'user_properties',{
-        'user_id': public_key,
-        'theme': typeof cookie !== 'undefined' ? cookie('color') : 'null',
-        'language': typeof cookie !== 'undefined' ? cookie('lang') : 'null',
-        'font': typeof cookie !== 'undefined' ? cookie('font') : 'null',
-        'url': window.location.href,
-        'ip_address': ip_address
-    });
+        function hashFnv32a(str) {
+            var i, l, hval = 0x811c9dc5;
+            for(i = 0, l = str.length; i < l; i++){
+                hval ^= str.charCodeAt(i);
+                hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
+            }
+            return ("0000000" + (hval >>> 0).toString(16)).substr(-8);
+        }
+
+        // Google Analytics
+        gtag('js', new Date());
+        gtag('set', {'user_id': hashFnv32a(cookie('sf_session_id'))});
+        gtag('set', 'user_properties',{
+            'theme': typeof cookie !== 'undefined' ? cookie('color') : 'null',
+            'language': typeof cookie !== 'undefined' ? cookie('lang') : 'null',
+            'font': typeof cookie !== 'undefined' ? cookie('font') : 'null',
+            'url': window.location.href,
+        });
+    }
 
     // Font Awesome
     getScript('//kit.fontawesome.com/5165bd60e9.js');
