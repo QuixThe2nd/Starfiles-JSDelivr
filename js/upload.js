@@ -28,6 +28,10 @@ else
     starfiles.public = 'true';
 if(typeof profile === "undefined")
    profile = '';
+if(typeof domain === "undefined")
+   domain = 'starfiles.co';
+if(typeof cdn === "undefined")
+   cdn = 'cdn.starfiles.co';
 if (typeof starfiles.newtab === "undefined")
     starfiles.newtab = false;
 if (!isset('folderid'))
