@@ -1,5 +1,5 @@
 let totalUploads = [];
-const BYTES_PER_CHUNK = parseInt(1048576 * 20, 10); // 20MB
+const BYTES_PER_CHUNK = parseInt(1048576 * 10, 10); // 20MB
 let isUploading = false;
 let completehandler = false;
 let currentUploadCounter = 0;
