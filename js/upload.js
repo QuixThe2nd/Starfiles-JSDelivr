@@ -380,7 +380,7 @@ async function preChunkCheck(index, tracker) {
                     inner_request.addEventListener("abort", abortHandler, !1);
                     inner_request.open("POST", "https://upload." + domain + '/chunk?' + (window.location.href.split('?')[1] ?? ''), true); // https://cors-anywhere.herokuapp.com/https://starfiles.co/api/upload.php
                     inner_request.setRequestHeader('Access-Control-Allow-Origin', '*');
-                    inner_request.timeout = 45000;
+                    inner_request.timeout = 300000;
                     inner_request.ontimeout = function(e){
                         preChunkCheck(index, tracker);
                     }
