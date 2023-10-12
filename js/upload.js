@@ -71,14 +71,14 @@ class UploadTracker {
 
         navigator.sendBeacon('https://api.' + domain + '/file/reserve_id/' + this.fileId);
         if(xenhtml)
-            finish('<a href="#" onclick="window.location = \'https://' + domain + '/file/' + this.fileId + '\';setTimeout(function(){window.location.reload()},1500)" target="_blank" class="banner banner-small">' + this.file.name + '&nbsp;<i class="fas fa-link"></i></a>&nbsp;<i onclick="open_share_overlay(\'' + this.fileId + '\')" class="fas fa-share-square"></i><br>');
+            finish('<a href="#" onclick="window.location = \'https://' + domain + '/file/' + this.fileId + '\';setTimeout(function(){window.location.reload()},1500)" target="_blank" class="banner banner-small">' + this.file.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') + '&nbsp;<i class="fas fa-link"></i></a>&nbsp;<i onclick="open_share_overlay(\'' + this.fileId + '\')" class="fas fa-share-square"></i><br>');
         else if(starfiles.local){
             if(starfiles.newtab)
-                finish('<a href="' + starfiles.local_path + this.fileId + '" target="_blank">' + this.file.name + '&nbsp;<i class="fas fa-link"></i></a>&nbsp;<i onclick="open_share_overlay(\'' + this.fileId + '\')" class="fas fa-share-square"></i><br>');
+                finish('<a href="' + starfiles.local_path + this.fileId + '" target="_blank">' + this.file.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') + '&nbsp;<i class="fas fa-link"></i></a>&nbsp;<i onclick="open_share_overlay(\'' + this.fileId + '\')" class="fas fa-share-square"></i><br>');
             else
-                finish('<a href="' + starfiles.local_path + this.fileId + '">' + this.file.name + '&nbsp;<i class="fas fa-link"></i></a>&nbsp;<i onclick="open_share_overlay(\'' + this.fileId + '\')" class="fas fa-share-square"></i><br>');
+                finish('<a href="' + starfiles.local_path + this.fileId + '">' + this.file.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') + '&nbsp;<i class="fas fa-link"></i></a>&nbsp;<i onclick="open_share_overlay(\'' + this.fileId + '\')" class="fas fa-share-square"></i><br>');
         }else
-            finish('<a href="https://' + domain + '/file/' + this.fileId + '" target="_blank" class="banner banner-small">' + this.file.name + '&nbsp;<i class="fas fa-link"></i></a>&nbsp;<i onclick="open_share_overlay(\'' + this.fileId + '\')" class="fas fa-share-square"></i><br>');
+            finish('<a href="https://' + domain + '/file/' + this.fileId + '" target="_blank" class="banner banner-small">' + this.file.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') + '&nbsp;<i class="fas fa-link"></i></a>&nbsp;<i onclick="open_share_overlay(\'' + this.fileId + '\')" class="fas fa-share-square"></i><br>');
         document.getElementById('link_not_ready').style.display = 'block';
     }
 
