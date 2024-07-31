@@ -16,6 +16,15 @@ let concurrentUploads = 5;
 // let logging_enabled = true;
 // let progress = 0;
 
+if (typeof isset === "undefined") {
+	function isset(variable, global=false){
+	    if(global)
+			return typeof window[variable] !== typeof undefined;
+	    else
+			return typeof this[variable] !== typeof undefined;
+	}
+}
+
 if (!isset('xenhtml'))
     xenhtml = false;
 if (typeof starfiles === "undefined")
