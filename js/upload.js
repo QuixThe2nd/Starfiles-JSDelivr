@@ -25,7 +25,7 @@ if (typeof isset === "undefined") {
 	}
 }
 
-if (!isset('xenhtml'))
+if (!isset('xenhtml'))∂
     xenhtml = false;
 if (typeof starfiles === "undefined")
     starfiles = [];
@@ -35,8 +35,6 @@ if (typeof starfiles.public === "undefined" || !starfiles.public)
     starfiles.public = 'false';
 else
     starfiles.public = 'true';
-if(typeof profile === "undefined")
-   profile = '';
 if(typeof domain === "undefined")
    domain = 'starfiles.co';
 if(typeof cdn === "undefined")
