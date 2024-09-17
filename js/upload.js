@@ -25,7 +25,7 @@ if (typeof isset === "undefined") {
 	}
 }
 
-if (!isset('xenhtml'))∂
+if (!isset('xenhtml'))
     xenhtml = false;
 if (typeof starfiles === "undefined")
     starfiles = [];
